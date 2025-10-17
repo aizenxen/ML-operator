@@ -1,93 +1,86 @@
 <!doctype html>
 <html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>АРМ мониторинга — Аудит</title>
-<style>
-/* Reset-ish */
-*{box-sizing:border-box} body{margin:0;font-family:Inter,Segoe UI,Arial,Helvetica,sans-serif;background:#f6f8fb;color:#111}
-a{color:#1363df;text-decoration:none} a:hover{text-decoration:underline}
-.container{max-width:1200px;margin:0 auto;padding:24px}
-.topbar{display:flex;align-items:center;gap:16px;height:56px;padding:0 16px;background:#101828;color:#fff;box-shadow:0 1px 0 rgba(0,0,0,.2)}
-.topbar .brand{font-weight:700;letter-spacing:.3px}
-.topbar nav a{color:#e8eef9;margin:0 10px;padding:6px 10px;border-radius:8px}
-.topbar nav a.active, .topbar nav a:hover{background:rgba(255,255,255,.12)}
-.card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 1px 2px rgba(16,24,40,.04);padding:16px;margin-bottom:16px}
-.hstack{display:flex;gap:12px;align-items:center}
-.vstack{display:flex;gap:12px;flex-direction:column}
-.input, select{height:36px;border:1px solid #d0d5dd;border-radius:8px;padding:0 10px;background:#fff}
-.btn{height:36px;border:1px solid #d0d5dd;border-radius:8px;padding:0 14px;background:#1363df;color:#fff;font-weight:600}
-.btn.secondary{background:#fff;color:#111}
-.btn.success{background:#16a34a;border-color:#16a34a}
-.btn.warn{background:#f59e0b;border-color:#f59e0b}
-.btn.danger{background:#dc2626;border-color:#dc2626}
-.table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden}
-.table th,.table td{padding:10px 12px;border-bottom:1px solid #eef0f3;font-size:14px}
-.table thead{background:#f3f4f6}
-.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.kpi .tile{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:14px}
-.kpi .tile .label{color:#667085;font-size:12px}
-.kpi .tile .value{font-size:22px;font-weight:700;margin-top:6px}
-.status{padding:3px 8px;border-radius:999px;font-size:12px;font-weight:600;display:inline-block}
-.ok{background:#e8f5ee;color:#0f5132}
-.warn{background:#fff7e6;color:#7a4d00}
-.fail{background:#fee2e2;color:#7f1d1d}
-.running{background:#e0ecff;color:#1d4ed8}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.chart{height:220px;border:1px dashed #cdd5df;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#667085}
-.meta{color:#667085;font-size:12px}
-.form-row{display:flex;gap:12px}
-hr.sep{border:none;border-top:1px solid #e5e7eb;margin:16px 0}
-.badge{background:#eef2ff;color:#3730a3;border-radius:999px;padding:2px 8px;font-size:12px}
-pre{background:#0b1220;color:#e6edf6;padding:12px;border-radius:8px;overflow:auto}
-footer{color:#98a2b3;font-size:12px;margin-top:24px}
-.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e8efff,#f6f8fb)}
-.login-card{width:380px;background:#fff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 6px 30px rgba(16,24,40,.08);padding:20px}
-.login-card h2{margin:0 0 8px}
-.small{font-size:12px;color:#667085}
-.label{font-size:12px;color:#475467;margin-bottom:6px}
-.code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>АРМ мониторинга — Аудит</title>
+  <link rel="stylesheet" href="assets.css">
+  <script defer src="app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", requireAuth);
+  </script>
 </head>
 <body>
-
-<div class="topbar">
-  <div class="brand">ML-Ассист — АРМ мониторинга обучения</div>
-  <nav>
-    <a href="index.html" class="">Главная</a>
-    <a href="experiments.html" class="">Эксперименты</a>
-    <a href="run.html" class="">Запуск</a>
-    <a href="incidents.html" class="">Инциденты</a>
-    <a href="audit.html" class="active">Аудит</a>
-    <a href="model.html" class="">Модель</a>
-    <a href="reports.html" class="">Отчёты</a>
-  </nav>
-</div>
-
-<div class="container">
-
-<div class="card">
-  <div class="hstack">
-    <input class="input" style="width:260px" value="Фильтр по пользователю">
-    <select><option>Действие: любое</option><option>Запуск обучения</option><option>Изменение порога</option><option>Создание инцидента</option></select>
-    <select><option>Период: 24ч</option><option>7 дней</option><option>30 дней</option></select>
-    <button class="btn secondary">Экспорт CSV</button>
+  <div class="topbar">
+    <div class="brand">АРМ мониторинга</div>
+    <nav>
+      <a href="index.html">Главная</a>
+      <a href="experiments.html">Эксперименты</a>
+      <a href="run.html">Мониторинг</a>
+      <a href="incidents.html">Инциденты</a>
+      <a href="audit.html" class="active">Аудит</a>
+      <a href="reports.html">Отчёты</a>
+    </nav>
+    <div class="profile">
+      <span class="avatar"></span>
+      <span class="small">operator@example.com</span>
+      <button id="logout-btn" class="btn secondary" type="button">Выйти</button>
+    </div>
   </div>
-</div>
 
-<div class="card">
-  <table class="table">
-    <thead><tr><th>Время</th><th>Пользователь</th><th>Действие</th><th>Объект</th><th>Комментарий</th></tr></thead>
-    <tbody>
-      <tr><td>10:14:33</td><td>a.petrov</td><td>Запуск обучения</td><td>Run #78421</td><td>exp-recs-AB</td></tr>
-      <tr><td>09:58:02</td><td>m.ivanova</td><td>Изменение порога</td><td>ROC AUC ≥ 0.80</td><td>для проекта Recs</td></tr>
-      <tr><td>09:12:19</td><td>k.sidorov</td><td>Создание инцидента</td><td>INC-220</td><td>ошибка пайплайна</td></tr>
-    </tbody>
-  </table>
-</div>
+  <div class="container">
+    <div class="card">
+      <div class="hstack">
+        <input class="input" style="width:260px" placeholder="Пользователь (логин)">
+        <select style="width:220px"><option>Действие: любое</option><option>Запуск обучения</option><option>Изменение порога</option><option>Создание инцидента</option></select>
+        <select style="width:180px"><option>Период: 24ч</option><option>7 дней</option><option>30 дней</option></select>
+        <button class="btn secondary" onclick="openModal('modal-audit-report')">Сформировать отчёт</button>
+        <button class="btn secondary" onclick="exportCSV()">Экспорт CSV</button>
+      </div>
+    </div>
 
-<footer>Прототип UI. Данные фиктивны. © 2025</footer>
-</div>
+    <div class="card">
+      <table class="table" aria-label="Журнал аудита">
+        <thead><tr><th>Дата/время</th><th>Пользователь/роль</th><th>Действие</th><th>Объект</th><th>Результат</th><th>IP/агент</th></tr></thead>
+        <tbody>
+          <tr><td>2025-10-16 10:14:33</td><td>a.petrov / operator</td><td>Запуск обучения</td><td>Run #78421</td><td>success</td><td>10.0.0.5 / ui</td></tr>
+          <tr><td>2025-10-16 09:58:02</td><td>m.ivanova / operator</td><td>Изменение порога</td><td>ROC AUC ≥ 0.80</td><td>success</td><td>10.0.0.7 / ui</td></tr>
+          <tr><td>2025-10-16 09:12:19</td><td>k.sidorov / operator</td><td>Создание инцидента</td><td>INC-220</td><td>success</td><td>10.0.0.3 / ui</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <footer>Прототип UI. Данные фиктивны. © 2025</footer>
+  </div>
+
+  <!-- Modal: Отчёт аудита -->
+  <div id="modal-audit-report" class="modal-backdrop" role="dialog" aria-modal="true">
+    <div class="modal">
+      <header>
+        <h3 style="margin:0">Отчёт аудита</h3>
+        <button class="btn secondary" onclick="closeModal('modal-audit-report')">Закрыть</button>
+      </header>
+      <div class="vstack">
+        <div class="form-row">
+          <label class="vstack" style="width:220px">
+            <div class="label">Период</div>
+            <select><option>24 часа</option><option>7 дней</option><option>30 дней</option></select>
+          </label>
+          <label class="vstack" style="width:220px">
+            <div class="label">Пользователь</div>
+            <input class="input" placeholder="логин">
+          </label>
+          <label class="vstack" style="flex:1">
+            <div class="label">Типы действий</div>
+            <input class="input" placeholder="launch, threshold, incident">
+          </label>
+        </div>
+      </div>
+      <footer>
+        <button class="btn secondary" onclick="closeModal('modal-audit-report')">Отмена</button>
+        <button class="btn" onclick="alert('Сформировано (демо)')">Сформировать</button>
+      </footer>
+    </div>
+  </div>
 </body>
 </html>
