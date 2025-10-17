@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>АРМ мониторинга — Инциденты</title>
+<style>
+/* Reset-ish */
+*{box-sizing:border-box} body{margin:0;font-family:Inter,Segoe UI,Arial,Helvetica,sans-serif;background:#f6f8fb;color:#111}
+a{color:#1363df;text-decoration:none} a:hover{text-decoration:underline}
+.container{max-width:1200px;margin:0 auto;padding:24px}
+.topbar{display:flex;align-items:center;gap:16px;height:56px;padding:0 16px;background:#101828;color:#fff;box-shadow:0 1px 0 rgba(0,0,0,.2)}
+.topbar .brand{font-weight:700;letter-spacing:.3px}
+.topbar nav a{color:#e8eef9;margin:0 10px;padding:6px 10px;border-radius:8px}
+.topbar nav a.active, .topbar nav a:hover{background:rgba(255,255,255,.12)}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 1px 2px rgba(16,24,40,.04);padding:16px;margin-bottom:16px}
+.hstack{display:flex;gap:12px;align-items:center}
+.vstack{display:flex;gap:12px;flex-direction:column}
+.input, select{height:36px;border:1px solid #d0d5dd;border-radius:8px;padding:0 10px;background:#fff}
+.btn{height:36px;border:1px solid #d0d5dd;border-radius:8px;padding:0 14px;background:#1363df;color:#fff;font-weight:600}
+.btn.secondary{background:#fff;color:#111}
+.btn.success{background:#16a34a;border-color:#16a34a}
+.btn.warn{background:#f59e0b;border-color:#f59e0b}
+.btn.danger{background:#dc2626;border-color:#dc2626}
+.table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden}
+.table th,.table td{padding:10px 12px;border-bottom:1px solid #eef0f3;font-size:14px}
+.table thead{background:#f3f4f6}
+.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi .tile{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:14px}
+.kpi .tile .label{color:#667085;font-size:12px}
+.kpi .tile .value{font-size:22px;font-weight:700;margin-top:6px}
+.status{padding:3px 8px;border-radius:999px;font-size:12px;font-weight:600;display:inline-block}
+.ok{background:#e8f5ee;color:#0f5132}
+.warn{background:#fff7e6;color:#7a4d00}
+.fail{background:#fee2e2;color:#7f1d1d}
+.running{background:#e0ecff;color:#1d4ed8}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.chart{height:220px;border:1px dashed #cdd5df;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#667085}
+.meta{color:#667085;font-size:12px}
+.form-row{display:flex;gap:12px}
+hr.sep{border:none;border-top:1px solid #e5e7eb;margin:16px 0}
+.badge{background:#eef2ff;color:#3730a3;border-radius:999px;padding:2px 8px;font-size:12px}
+pre{background:#0b1220;color:#e6edf6;padding:12px;border-radius:8px;overflow:auto}
+footer{color:#98a2b3;font-size:12px;margin-top:24px}
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e8efff,#f6f8fb)}
+.login-card{width:380px;background:#fff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 6px 30px rgba(16,24,40,.08);padding:20px}
+.login-card h2{margin:0 0 8px}
+.small{font-size:12px;color:#667085}
+.label{font-size:12px;color:#475467;margin-bottom:6px}
+.code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">ML-Ассист — АРМ мониторинга обучения</div>
+  <nav>
+    <a href="index.html" class="">Главная</a>
+    <a href="experiments.html" class="">Эксперименты</a>
+    <a href="run.html" class="">Запуск</a>
+    <a href="incidents.html" class="active">Инциденты</a>
+    <a href="audit.html" class="">Аудит</a>
+    <a href="model.html" class="">Модель</a>
+    <a href="reports.html" class="">Отчёты</a>
+  </nav>
+</div>
+
+<div class="container">
+
+<div class="card">
+  <div class="hstack">
+    <select><option>Статус: любой</option><option>Новый</option><option>В работе</option><option>Закрыт</option></select>
+    <select><option>Проект: все</option><option>Recs</option><option>Churn</option><option>Fraud</option></select>
+    <input class="input" style="width:260px" value="Поиск инцидента">
+    <button class="btn">Создать инцидент</button>
+  </div>
+</div>
+
+<div class="card">
+  <table class="table">
+    <thead><tr><th>ID</th><th>Время</th><th>Источник</th><th>Описание</th><th>Приоритет</th><th>Статус</th><th>Исполнитель</th></tr></thead>
+    <tbody>
+      <tr><td>INC-221</td><td>10:16</td><td>Run #78421</td><td>ROC AUC ниже порога</td><td><span class="badge">High</span></td><td><span class="status fail">Новый</span></td><td>a.petrov</td></tr>
+      <tr><td>INC-220</td><td>09:02</td><td>Run #78410</td><td>Пайплайн остановлен</td><td><span class="badge">Medium</span></td><td><span class="status warn">В работе</span></td><td>m.ivanova</td></tr>
+      <tr><td>INC-219</td><td>08:44</td><td>Model recs:v31</td><td>Высокая задержка</td><td><span class="badge">Low</span></td><td><span class="status ok">Закрыт</span></td><td>k.sidorov</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<footer>Прототип UI. Данные фиктивны. © 2025</footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>АРМ мониторинга — Запуск</title>
+<style>
+/* Reset-ish */
+*{box-sizing:border-box} body{margin:0;font-family:Inter,Segoe UI,Arial,Helvetica,sans-serif;background:#f6f8fb;color:#111}
+a{color:#1363df;text-decoration:none} a:hover{text-decoration:underline}
+.container{max-width:1200px;margin:0 auto;padding:24px}
+.topbar{display:flex;align-items:center;gap:16px;height:56px;padding:0 16px;background:#101828;color:#fff;box-shadow:0 1px 0 rgba(0,0,0,.2)}
+.topbar .brand{font-weight:700;letter-spacing:.3px}
+.topbar nav a{color:#e8eef9;margin:0 10px;padding:6px 10px;border-radius:8px}
+.topbar nav a.active, .topbar nav a:hover{background:rgba(255,255,255,.12)}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;box-shadow:0 1px 2px rgba(16,24,40,.04);padding:16px;margin-bottom:16px}
+.hstack{display:flex;gap:12px;align-items:center}
+.vstack{display:flex;gap:12px;flex-direction:column}
+.input, select{height:36px;border:1px solid #d0d5dd;border-radius:8px;padding:0 10px;background:#fff}
+.btn{height:36px;border:1px solid #d0d5dd;border-radius:8px;padding:0 14px;background:#1363df;color:#fff;font-weight:600}
+.btn.secondary{background:#fff;color:#111}
+.btn.success{background:#16a34a;border-color:#16a34a}
+.btn.warn{background:#f59e0b;border-color:#f59e0b}
+.btn.danger{background:#dc2626;border-color:#dc2626}
+.table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden}
+.table th,.table td{padding:10px 12px;border-bottom:1px solid #eef0f3;font-size:14px}
+.table thead{background:#f3f4f6}
+.kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi .tile{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:14px}
+.kpi .tile .label{color:#667085;font-size:12px}
+.kpi .tile .value{font-size:22px;font-weight:700;margin-top:6px}
+.status{padding:3px 8px;border-radius:999px;font-size:12px;font-weight:600;display:inline-block}
+.ok{background:#e8f5ee;color:#0f5132}
+.warn{background:#fff7e6;color:#7a4d00}
+.fail{background:#fee2e2;color:#7f1d1d}
+.running{background:#e0ecff;color:#1d4ed8}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.chart{height:220px;border:1px dashed #cdd5df;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#667085}
+.meta{color:#667085;font-size:12px}
+.form-row{display:flex;gap:12px}
+hr.sep{border:none;border-top:1px solid #e5e7eb;margin:16px 0}
+.badge{background:#eef2ff;color:#3730a3;border-radius:999px;padding:2px 8px;font-size:12px}
+pre{background:#0b1220;color:#e6edf6;padding:12px;border-radius:8px;overflow:auto}
+footer{color:#98a2b3;font-size:12px;margin-top:24px}
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#e8efff,#f6f8fb)}
+.login-card{width:380px;background:#fff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 6px 30px rgba(16,24,40,.08);padding:20px}
+.login-card h2{margin:0 0 8px}
+.small{font-size:12px;color:#667085}
+.label{font-size:12px;color:#475467;margin-bottom:6px}
+.code{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">ML-Ассист — АРМ мониторинга обучения</div>
+  <nav>
+    <a href="index.html" class="">Главная</a>
+    <a href="experiments.html" class="">Эксперименты</a>
+    <a href="run.html" class="active">Запуск</a>
+    <a href="incidents.html" class="">Инциденты</a>
+    <a href="audit.html" class="">Аудит</a>
+    <a href="model.html" class="">Модель</a>
+    <a href="reports.html" class="">Отчёты</a>
+  </nav>
+</div>
+
+<div class="container">
+
+<div class="card">
+  <div class="hstack" style="justify-content:space-between">
+    <div>
+      <h3 style="margin:0">Run #78421 — exp-recs-AB</h3>
+      <div class="meta">Проект: Recs • Модель: recs:v32 • Метки: canary • Статус: <span class="status fail">FAILED</span></div>
+    </div>
+    <div class="hstack">
+      <button class="btn warn">Создать инцидент</button>
+      <button class="btn secondary">Поделиться</button>
+    </div>
+  </div>
+  <hr class="sep">
+  <div class="grid2">
+    <div class="vstack">
+      <div class="card">
+        <h4 style="margin:0 0 8px 0">Метрики (последние значения)</h4>
+        <table class="table">
+          <thead><tr><th>Метрика</th><th>Значение</th><th>Порог</th><th>Статус</th></tr></thead>
+          <tbody>
+            <tr><td>ROC AUC</td><td>0.78</td><td>≥ 0.80</td><td><span class="status fail">FAIL</span></td></tr>
+            <tr><td>Latency p95</td><td>210 ms</td><td>≤ 200 ms</td><td><span class="status warn">WARN</span></td></tr>
+            <tr><td>Loss</td><td>0.41</td><td>≤ 0.45</td><td><span class="status ok">OK</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h4 style="margin:0 0 8px 0">Артефакты</h4>
+        <table class="table">
+          <thead><tr><th>Тип</th><th>Имя</th><th>Размер</th><th>Хэш</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>Weights</td><td>recs_v32.pt</td><td>124 MB</td><td>f3a9…7b</td><td><button class="btn secondary">Скачать</button></td></tr>
+            <tr><td>Logs</td><td>train.log</td><td>3.2 MB</td><td>9c1d…2a</td><td><button class="btn secondary">Открыть</button></td></tr>
+            <tr><td>Report</td><td>metrics.html</td><td>240 KB</td><td>ab44…ff</td><td><button class="btn secondary">Просмотр</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="vstack">
+      <div class="card">
+        <h4 style="margin:0 0 8px 0">Таймлайн</h4>
+        <div class="chart">preprocess ✓ → train ✓ → validate ✗</div>
+        <div class="meta">Start 10:14:22 • End 11:26:51</div>
+      </div>
+      <div class="card">
+        <h4 style="margin:0 0 8px 0">Quality Gates</h4>
+        <table class="table">
+          <thead><tr><th>Правило</th><th>Значение</th><th>Статус</th></tr></thead>
+          <tbody>
+            <tr><td>ROC AUC ≥ 0.80</td><td>0.78</td><td><span class="status fail">FAIL</span></td></tr>
+            <tr><td>Latency p95 ≤ 200 ms</td><td>210</td><td><span class="status warn">WARN</span></td></tr>
+            <tr><td>Loss ≤ 0.45</td><td>0.41</td><td><span class="status ok">OK</span></td></tr>
+          </tbody>
+        </table>
+        <div class="hstack"><button class="btn danger">Отказать в релизе</button><button class="btn success">Одобрить</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>Прототип UI. Данные фиктивны. © 2025</footer>
+</div>
+</body>
+</html>
